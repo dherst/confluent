@@ -1,0 +1,11 @@
+ SELECT
+  T.userid AS UserID, 
+  count( T.userid) as Trades_Executed,
+  sum( T.quantity) as Quantity_Traded,
+  avg( T.quantity) as Average_Trade,
+  max( T.quantity) as Largest_Trade
+FROM `default`.`cluster_0`.`sample_data_users` U
+INNER JOIN `default`.`cluster_0`.`sample_data_stock_trades` T ON ((U.userid = T.userid))
+WHERE (U.gender = 'FEMALE')
+GROUP BY T.userid
+;
