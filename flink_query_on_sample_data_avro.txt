@@ -1,0 +1,15 @@
+CREATE Table TRADES_BY_WOMEN_STATS  (AS SELECT
+  T.userid AS UserID, 
+  count( T.userid) ,
+  sum( T.quantity) ,
+  avg( T.quantity) ,
+  max( T.quantity) 
+FROM `default`.`cluster_0`.`sample_data_users` U
+INNER JOIN `default`.`cluster_0`.`sample_data_stock_trades` T ON ((U.userid = T.userid))
+WHERE (U.gender = 'FEMALE')
+GROUP BY T.userid
+) WITH (
+  'value.format' = 'avro-confluent',
+  'value.avro-confluent.url' = 'http://localhost:8082',
+)
+;
